@@ -1,195 +1,142 @@
-import React, { useState } from 'react';
-import SplashScreen from './components/SplashScreen';
-import OnboardingStep1 from './components/OnboardingStep1';
-import OnboardingStep2 from './components/OnboardingStep2';
-import OnboardingStep3 from './components/OnboardingStep3';
-import Dashboard from './components/Dashboard';
+import React from 'react';
+import { AppProvider, useApp } from './context/AppContext';
+import SplashScreen from './components/auth/SplashScreen';
+import LoginScreen from './components/auth/LoginScreen';
+import RegisterScreen from './components/auth/RegisterScreen';
+import OtpScreen from './components/auth/OtpScreen';
+import Sidebar from './components/layout/Sidebar';
+import HomeFeed from './components/feed/HomeFeed';
+import MessagingView from './components/messaging/MessagingView';
+import ProfileView from './components/profile/ProfileView';
+import CreateView from './components/create/CreateView';
+import ExploreView from './components/explore/ExploreView';
+import NotificationsView from './components/notifications/NotificationsView';
+import SettingsView from './components/settings/SettingsView';
+import { SavedView, ArchiveView, ReportModal } from './components/additional/AdditionalViews';
+import SoulMomentTimeline from './components/moments/SoulMomentTimeline';
+import SoulMomentDetail from './components/moments/SoulMomentDetail';
+import { Check } from 'lucide-react';
+import './components/common/fluidTransition.css';
 
-import CaptureMemoryModal from './components/CaptureMemoryModal';
-import TimelineModal from './components/TimelineModal';
-import JournalModal from './components/JournalModal';
-import PartnerSpaceModal from './components/PartnerSpaceModal';
-import TimeCapsuleModal from './components/TimeCapsuleModal';
-import FeelingsModal from './components/FeelingsModal';
-import GalleryModal from './components/GalleryModal';
-import SearchModal from './components/SearchModal';
-import ProfileModal from './components/ProfileModal';
-import SettingsModal from './components/SettingsModal';
-import AuthModal from './components/AuthModal';
-import SwaggerDocsModal from './components/SwaggerDocsModal';
+const AppContent = () => {
+  const { currentRoute, reportModalOpen, setReportModalOpen, toastMessage, fluidTransition } = useApp();
 
-import { Sparkles, Code2, Play } from 'lucide-react';
+  // 1. Auth & Splash Flow (Full Screen Atmospheric Layouts)
+  if (currentRoute === 'splash') return <SplashScreen />;
+  if (currentRoute === 'login') return <LoginScreen />;
+  if (currentRoute === 'register') return <RegisterScreen />;
+  if (currentRoute === 'otp') return <OtpScreen />;
 
-export default function App() {
-  // Current main view: 'splash', 'step1', 'step2', 'step3', 'dashboard'
-  const [currentView, setCurrentView] = useState('splash');
-
-  // Modals state
-  const [isCaptureOpen, setIsCaptureOpen] = useState(false);
-  const [isTimelineOpen, setIsTimelineOpen] = useState(false);
-  const [isJournalOpen, setIsJournalOpen] = useState(false);
-  const [isPartnerOpen, setIsPartnerOpen] = useState(false);
-  const [isCapsuleOpen, setIsCapsuleOpen] = useState(false);
-  const [isFeelingsOpen, setIsFeelingsOpen] = useState(false);
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [isSwaggerOpen, setIsSwaggerOpen] = useState(false);
-
-  const handleLogout = () => {
-    if (window.confirm('Are you sure you want to end your encrypted session?')) {
-      fetch('/api/auth/logout', { method: 'POST' }).finally(() => {
-        setCurrentView('splash');
-      });
-    }
-  };
-
+  // 2. Main Web Application (Persistent Liquid Glass Sidebar + Main View)
   return (
-    <div className="app-viewport">
-      {/* Top Floating View Switcher Bar (Directly inspect all 5 screens and live Swagger) */}
-      <div className="view-switcher-bar">
-        <button
-          className={`view-btn ${currentView === 'splash' ? 'active' : ''}`}
-          onClick={() => setCurrentView('splash')}
-        >
-          🌸 Splash
-        </button>
-        <button
-          className={`view-btn ${currentView === 'step1' ? 'active' : ''}`}
-          onClick={() => setCurrentView('step1')}
-        >
-          01 Intro
-        </button>
-        <button
-          className={`view-btn ${currentView === 'step2' ? 'active' : ''}`}
-          onClick={() => setCurrentView('step2')}
-        >
-          02 Personalize
-        </button>
-        <button
-          className={`view-btn ${currentView === 'step3' ? 'active' : ''}`}
-          onClick={() => setCurrentView('step3')}
-        >
-          03 Connect
-        </button>
-        <button
-          className={`view-btn ${currentView === 'dashboard' ? 'active' : ''}`}
-          onClick={() => setCurrentView('dashboard')}
-        >
-          ⚡ Dashboard
-        </button>
-        <button
-          className="view-btn swagger-badge-btn"
-          onClick={() => setIsSwaggerOpen(true)}
-          title="Open FastAPI Swagger Interactive Docs"
-        >
-          <Code2 size={13} />
-          <span>Swagger API</span>
-        </button>
-      </div>
+    <div className="main-app-container">
+      <Sidebar />
 
-      {/* Screen Views Routing */}
-      {currentView === 'splash' && (
-        <SplashScreen
-          onNext={() => setCurrentView('step1')}
-          onDirectDashboard={() => setCurrentView('dashboard')}
-        />
+      <main className="main-view-area" role="main">
+        {currentRoute === 'home' && (
+          <div className="soul-home-reveal-container">
+            <HomeFeed />
+          </div>
+        )}
+        {currentRoute === 'moments' && <SoulMomentTimeline />}
+        {currentRoute === 'messages' && <MessagingView />}
+        {currentRoute === 'profile' && (
+          <div className="profile-organic-reveal">
+            <ProfileView />
+          </div>
+        )}
+        {currentRoute === 'create' && (
+          <div
+            className={`soul-fluid-page-container ${
+              fluidTransition?.phase === 'exiting' ? 'page-fluid-exit' : 'page-fluid-enter'
+            }`}
+          >
+            <CreateView />
+          </div>
+        )}
+        {currentRoute === 'explore' && <ExploreView />}
+        {currentRoute === 'notifications' && (
+          <div
+            className={`soul-fluid-page-container ${
+              fluidTransition?.phase === 'exiting' ? 'page-fluid-exit' : 'page-fluid-enter'
+            }`}
+          >
+            <NotificationsView />
+          </div>
+        )}
+        {currentRoute === 'settings' && <SettingsView />}
+        {currentRoute === 'saved' && <SavedView />}
+        {currentRoute === 'archive' && <ArchiveView />}
+      </main>
+
+      {/* Fluid Liquid Transition Shimmer Veil */}
+      {fluidTransition?.active && (
+        <div
+          className={`soul-fluid-transition-veil ${
+            fluidTransition.phase === 'exiting' ? 'phase-exiting' : 'phase-entering'
+          }`}
+          aria-hidden="true"
+        >
+          <div className="liquid-refraction-sheen" />
+          <div className="liquid-ambient-wave wave-1" />
+          <div className="liquid-ambient-wave wave-2" />
+          <div className="liquid-chromatic-ripple" />
+        </div>
       )}
 
-      {currentView === 'step1' && (
-        <OnboardingStep1
-          onNext={() => setCurrentView('step2')}
-          onSkip={() => setCurrentView('dashboard')}
-        />
-      )}
+      {/* Soul Moment Detail Modal */}
+      <SoulMomentDetail />
 
-      {currentView === 'step2' && (
-        <OnboardingStep2
-          onNext={() => setCurrentView('step3')}
-          onSkip={() => setCurrentView('dashboard')}
-        />
-      )}
+      {/* Report Modal */}
+      <ReportModal
+        isOpen={reportModalOpen}
+        onClose={() => setReportModalOpen(false)}
+      />
 
-      {currentView === 'step3' && (
-        <OnboardingStep3
-          onGetStarted={() => setCurrentView('dashboard')}
-          onOpenGallery={() => setIsGalleryOpen(true)}
-        />
+      {/* Floating Toast Notification */}
+      {toastMessage && (
+        <div
+          style={{
+            position: 'fixed',
+            top: '2rem',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            background: 'rgba(15, 20, 38, 0.95)',
+            border: '1px solid rgba(185, 140, 255, 0.18)',
+            boxShadow: '0 0 30px rgba(185, 140, 255, 0.22)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '9999px',
+            padding: '0.65rem 1.4rem',
+            color: '#F5F3F7',
+            fontSize: '0.88rem',
+            fontWeight: 600,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.55rem',
+            zIndex: 300,
+            animation: 'fadeIn 0.2s ease-out'
+          }}
+        >
+          <Check size={16} color="#79D9FF" strokeWidth={3} />
+          <span>{toastMessage}</span>
+        </div>
       )}
-
-      {currentView === 'dashboard' && (
-        <Dashboard
-          onOpenSplash={() => setCurrentView('splash')}
-          onOpenOnboarding={() => setCurrentView('step1')}
-          onOpenSwagger={() => setIsSwaggerOpen(true)}
-          onOpenCapture={() => setIsCaptureOpen(true)}
-          onOpenTimeline={() => setIsTimelineOpen(true)}
-          onOpenJournal={() => setIsJournalOpen(true)}
-          onOpenPartner={() => setIsPartnerOpen(true)}
-          onOpenCapsule={() => setIsCapsuleOpen(true)}
-          onOpenFeelings={() => setIsFeelingsOpen(true)}
-          onOpenGallery={() => setIsGalleryOpen(true)}
-          onOpenSearch={() => setIsSearchOpen(true)}
-          onOpenProfile={() => setIsProfileOpen(true)}
-          onOpenSettings={() => setIsSettingsOpen(true)}
-          onOpenAuth={() => setIsAuthOpen(true)}
-          onLogout={handleLogout}
-        />
-      )}
-
-      {/* Modals & Feature Drawers */}
-      <CaptureMemoryModal
-        isOpen={isCaptureOpen}
-        onClose={() => setIsCaptureOpen(false)}
-        onMemoryCreated={() => {}}
-      />
-      <TimelineModal
-        isOpen={isTimelineOpen}
-        onClose={() => setIsTimelineOpen(false)}
-      />
-      <JournalModal
-        isOpen={isJournalOpen}
-        onClose={() => setIsJournalOpen(false)}
-      />
-      <PartnerSpaceModal
-        isOpen={isPartnerOpen}
-        onClose={() => setIsPartnerOpen(false)}
-      />
-      <TimeCapsuleModal
-        isOpen={isCapsuleOpen}
-        onClose={() => setIsCapsuleOpen(false)}
-      />
-      <FeelingsModal
-        isOpen={isFeelingsOpen}
-        onClose={() => setIsFeelingsOpen(false)}
-      />
-      <GalleryModal
-        isOpen={isGalleryOpen}
-        onClose={() => setIsGalleryOpen(false)}
-      />
-      <SearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-      />
-      <ProfileModal
-        isOpen={isProfileOpen}
-        onClose={() => setIsProfileOpen(false)}
-      />
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-      />
-      <AuthModal
-        isOpen={isAuthOpen}
-        onClose={() => setIsAuthOpen(false)}
-        onAuthSuccess={() => {}}
-      />
-      <SwaggerDocsModal
-        isOpen={isSwaggerOpen}
-        onClose={() => setIsSwaggerOpen(false)}
-      />
     </div>
   );
+};
+
+function App() {
+  return (
+    <AppProvider>
+      {/* Liquid Glass Atmospheric Ambient Background */}
+      <div className="app-atmosphere">
+        <div className="ambient-light-orb-1" />
+        <div className="ambient-light-orb-2" />
+      </div>
+
+      <AppContent />
+    </AppProvider>
+  );
 }
+
+export default App;

@@ -1,0 +1,13 @@
+{
+  "name": "soul-sync",
+  "version": "2.4.0",
+  "description": "Soul Sync — Premium Liquid Glass Web Application",
+  "scripts": {
+    "server": "cd backend && npm start",
+    "client": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build"
+  },
+  "keywords": ["react", "liquid-glass", "supabase", "sql", "swagger", "social-app"],
+  "author": "Soul Sync Engineering",
+  "license": "MIT"
+}

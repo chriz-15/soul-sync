@@ -1,0 +1,348 @@
+/* ===================================================
+   SOUL SYNC — FLUID TRANSITION & LIQUID UI SYSTEM
+   =================================================== */
+
+/* 1. Atmospheric Transition Veil (Morphing Liquid Glass Layer) */
+.soul-fluid-transition-veil {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 150;
+  overflow: hidden;
+}
+
+.soul-fluid-transition-veil.phase-entering {
+  animation: veilEntranceWave 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.soul-fluid-transition-veil.phase-exiting {
+  animation: veilExitWave 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes veilEntranceWave {
+  0% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  35% {
+    opacity: 1;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  100% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+}
+
+@keyframes veilExitWave {
+  0% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  30% {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  100% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+}
+
+.liquid-refraction-sheen {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 25%,
+    rgba(212, 66, 126, 0.18) 0%,
+    rgba(185, 140, 255, 0.14) 35%,
+    rgba(121, 217, 255, 0.08) 60%,
+    transparent 85%
+  );
+  mix-blend-mode: screen;
+}
+
+.liquid-ambient-wave {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(45px);
+  opacity: 0.6;
+}
+
+.liquid-ambient-wave.wave-1 {
+  width: 500px;
+  height: 500px;
+  top: -100px;
+  right: 15%;
+  background: radial-gradient(circle, rgba(185, 140, 255, 0.35) 0%, rgba(212, 66, 126, 0.2) 60%, transparent 100%);
+  animation: pulseLiquidOrb 0.5s ease-out forwards;
+}
+
+.liquid-ambient-wave.wave-2 {
+  width: 400px;
+  height: 400px;
+  top: 15%;
+  left: 20%;
+  background: radial-gradient(circle, rgba(121, 217, 255, 0.25) 0%, rgba(185, 140, 255, 0.15) 60%, transparent 100%);
+  animation: pulseLiquidOrb 0.5s ease-out 0.05s forwards;
+}
+
+.liquid-chromatic-ripple {
+  position: absolute;
+  top: 2rem;
+  right: 22%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid rgba(185, 140, 255, 0.4);
+  box-shadow: 0 0 25px rgba(212, 66, 126, 0.35);
+  animation: rippleExpand 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes rippleExpand {
+  0% {
+    transform: scale(0.2);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(4.8);
+    opacity: 0;
+  }
+}
+
+@keyframes pulseLiquidOrb {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* 2. Page Container Fluid Animations */
+.soul-fluid-page-container {
+  width: 100%;
+  position: relative;
+  will-change: transform, opacity, filter;
+}
+
+.soul-fluid-page-container.page-fluid-enter {
+  animation: soulFluidPageEnter 0.44s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.soul-fluid-page-container.page-fluid-exit {
+  animation: soulFluidPageExit 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes soulFluidPageEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.965) translateY(14px);
+    filter: blur(10px);
+  }
+  60% {
+    filter: blur(1.5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0px);
+  }
+}
+
+@keyframes soulFluidPageExit {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.97) translateY(-8px);
+    filter: blur(8px);
+  }
+}
+
+/* 3. Soul Home Feed Return Reveal */
+.soul-home-reveal-container {
+  width: 100%;
+  animation: soulHomeFadeIn 0.34s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes soulHomeFadeIn {
+  0% {
+    opacity: 0.88;
+    transform: scale(0.992);
+    filter: blur(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* 4. Liquid Page Top Bar & Back / Close Navigation */
+.liquid-page-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  width: 100%;
+}
+
+.liquid-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.48rem 1.15rem;
+  background: rgba(185, 140, 255, 0.08);
+  border: 1px solid rgba(185, 140, 255, 0.22);
+  color: #F5F3F7;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 15px rgba(10, 14, 28, 0.4);
+  transition: all 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.liquid-back-btn:hover {
+  background: rgba(185, 140, 255, 0.16);
+  border-color: rgba(212, 66, 126, 0.45);
+  box-shadow: 0 0 18px rgba(185, 140, 255, 0.28), 0 4px 15px rgba(10, 14, 28, 0.5);
+  transform: translateY(-1px);
+  color: #FFFFFF;
+}
+
+.liquid-back-btn:active {
+  transform: scale(0.97);
+}
+
+.liquid-page-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.95rem;
+  border-radius: 9999px;
+  background: rgba(10, 14, 28, 0.65);
+  border: 1px solid rgba(185, 140, 255, 0.16);
+  backdrop-filter: blur(16px);
+  font-size: 0.78rem;
+  color: #B98CFF;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.liquid-page-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #79D9FF;
+  box-shadow: 0 0 8px #79D9FF;
+}
+
+.liquid-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(185, 140, 255, 0.08);
+  border: 1px solid rgba(185, 140, 255, 0.2);
+  color: #A9ADBC;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 12px rgba(10, 14, 28, 0.35);
+  transition: all 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.liquid-close-btn:hover {
+  color: #FFFFFF;
+  background: rgba(212, 66, 126, 0.2);
+  border-color: rgba(212, 66, 126, 0.5);
+  box-shadow: 0 0 16px rgba(212, 66, 126, 0.35);
+  transform: rotate(90deg) scale(1.05);
+}
+
+.liquid-close-btn:active {
+  transform: rotate(90deg) scale(0.95);
+}
+
+/* 5. Liquid UI Surface Treatment for New Moment & Notifications */
+.liquid-experience-panel {
+  position: relative;
+  background: rgba(10, 14, 28, 0.84);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(185, 140, 255, 0.18);
+  border-radius: 24px;
+  box-shadow: 0 20px 50px -10px rgba(10, 14, 28, 0.85),
+              inset 0 1px 1px rgba(185, 140, 255, 0.12);
+  padding: 2.25rem;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Ambient glow orb pinned to top right inside panel */
+.liquid-panel-glow {
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 66, 126, 0.18) 0%, rgba(185, 140, 255, 0.12) 50%, transparent 80%);
+  pointer-events: none;
+  filter: blur(30px);
+}
+
+.liquid-panel-glow-left {
+  position: absolute;
+  bottom: -60px;
+  left: -60px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(121, 217, 255, 0.14) 0%, rgba(185, 140, 255, 0.08) 50%, transparent 80%);
+  pointer-events: none;
+  filter: blur(32px);
+}
+
+/* Responsive considerations */
+@media (max-width: 900px) {
+  .liquid-experience-panel {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .liquid-page-topbar {
+    margin-bottom: 1rem;
+  }
+  .liquid-page-badge {
+    display: none;
+  }
+}

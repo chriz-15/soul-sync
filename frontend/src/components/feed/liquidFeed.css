@@ -1,0 +1,1740 @@
+/* ===================================================
+   SOUL SYNC — LIQUID GLASS UI SYSTEM
+   HOME / FEED MASTER REDESIGN STYLESHEET
+   Deep Rose (#B83268) • Midnight Navy (#080D1C)
+   Lavender Glow (#B98CFF) • Subtle Ice (#79D9FF)
+   =================================================== */
+
+/* ---------------------------------------------------
+   1. PRIMARY LIQUID GLASS TOKENS & SURFACE MIXINS
+   --------------------------------------------------- */
+:root {
+  --lg-bg-primary: linear-gradient(145deg, rgba(15, 21, 40, 0.78) 0%, rgba(9, 13, 26, 0.84) 100%);
+  --lg-bg-secondary: linear-gradient(145deg, rgba(20, 28, 52, 0.52) 0%, rgba(12, 17, 34, 0.58) 100%);
+  --lg-bg-card: linear-gradient(145deg, rgba(16, 23, 44, 0.68) 0%, rgba(10, 14, 28, 0.74) 100%);
+  --lg-bg-interactive: rgba(255, 255, 255, 0.05);
+  --lg-bg-interactive-hover: rgba(255, 255, 255, 0.09);
+  --lg-bg-active: rgba(184, 50, 104, 0.22);
+
+  --lg-border-subtle: rgba(185, 140, 255, 0.14);
+  --lg-border-medium: rgba(185, 140, 255, 0.24);
+  --lg-border-glow: rgba(184, 50, 104, 0.45);
+  --lg-border-ice: rgba(121, 217, 255, 0.35);
+
+  --lg-sheen-top: inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.20);
+  --lg-sheen-soft: inset 0 1px 1px 0 rgba(255, 255, 255, 0.12);
+  --lg-inner-glow: inset 0 0 24px 0 rgba(185, 140, 255, 0.05);
+
+  --lg-shadow-deep: 0 22px 55px -12px rgba(3, 7, 18, 0.65), 0 8px 24px -6px rgba(0, 0, 0, 0.5);
+  --lg-shadow-card: 0 14px 38px -8px rgba(3, 7, 18, 0.55), 0 4px 14px rgba(0, 0, 0, 0.4);
+  --lg-shadow-glow-rose: 0 0 28px rgba(184, 50, 104, 0.25);
+  --lg-shadow-glow-lavender: 0 0 28px rgba(185, 140, 255, 0.22);
+}
+
+/* ---------------------------------------------------
+   2. HOME FEED MAIN LAYOUT
+   --------------------------------------------------- */
+.soul-feed-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  animation: feedOrganicReveal 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes feedOrganicReveal {
+  0% {
+    opacity: 0.85;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main Split Grid: Stream + Soul Radar / Discovery */
+.soul-feed-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  gap: 1.75rem;
+  width: 100%;
+  align-items: start;
+}
+
+@media (max-width: 1180px) {
+  .soul-feed-columns {
+    grid-template-columns: minmax(0, 1fr) 310px;
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .soul-feed-columns {
+    grid-template-columns: 1fr;
+  }
+  .soul-radar-column {
+    display: none;
+  }
+}
+
+/* ---------------------------------------------------
+   3. TOP LIQUID GLASS HEADER
+   --------------------------------------------------- */
+.soul-home-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 0.95rem 1.4rem;
+  border-radius: 22px;
+  background: var(--lg-bg-primary);
+  backdrop-filter: blur(32px) saturate(190%);
+  -webkit-backdrop-filter: blur(32px) saturate(190%);
+  border: 1px solid var(--lg-border-subtle);
+  box-shadow: var(--lg-sheen-top), var(--lg-shadow-card);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.soul-home-header:hover {
+  border-color: var(--lg-border-medium);
+}
+
+.soul-header-brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
+}
+
+.soul-header-title-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.soul-header-title {
+  font-family: var(--font-main);
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #F5F3F7;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.soul-header-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+}
+
+.soul-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #79D9FF;
+  box-shadow: 0 0 8px #79D9FF;
+  animation: soulPulseAnim 2.2s infinite;
+}
+
+@keyframes soulPulseAnim {
+  0%, 100% { opacity: 0.45; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Header Liquid Search Field */
+.soul-search-wrap {
+  position: relative;
+  flex: 1;
+  max-width: 480px;
+}
+
+.soul-search-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 2.8rem 0 2.75rem;
+  border-radius: 9999px;
+  background: rgba(10, 14, 28, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4), var(--lg-sheen-soft);
+  color: #F5F3F7;
+  font-family: var(--font-main);
+  font-size: 0.88rem;
+  outline: none;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.soul-search-input:focus {
+  background: rgba(10, 14, 28, 0.90);
+  border-color: rgba(185, 140, 255, 0.4);
+  box-shadow: 0 0 0 3px rgba(185, 140, 255, 0.12), inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.soul-search-icon {
+  position: absolute;
+  left: 0.95rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(240, 236, 246, 0.85);
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.soul-search-wrap:focus-within .soul-search-icon {
+  color: #B98CFF;
+}
+
+.soul-search-logo-badge {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0.82;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.soul-search-wrap:hover .soul-search-logo-badge,
+.soul-search-wrap:focus-within .soul-search-logo-badge {
+  opacity: 1;
+}
+
+.soul-search-clear-btn {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border-radius: 50%;
+  transition: color 0.15s ease;
+}
+
+.soul-search-clear-btn:hover {
+  color: #F5F3F7;
+}
+
+.soul-search-shortcut-badge {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.68rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 0.15rem 0.4rem;
+  pointer-events: none;
+}
+
+/* Header Actions */
+.soul-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.soul-header-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  height: 40px;
+  padding: 0 0.95rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--lg-sheen-soft);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  user-select: none;
+}
+
+.soul-header-btn:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.soul-header-btn.primary {
+  background: var(--primary-gradient);
+  border-color: rgba(255, 255, 255, 0.30);
+  box-shadow: var(--lg-sheen-top), 0 4px 18px rgba(184, 50, 104, 0.4);
+}
+
+.soul-header-btn.primary:hover {
+  box-shadow: var(--lg-sheen-top), 0 6px 24px rgba(184, 50, 104, 0.55);
+}
+
+.soul-header-user-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.35rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.soul-header-user-chip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--lg-border-medium);
+}
+
+.soul-header-user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(185, 140, 255, 0.4);
+}
+
+.soul-header-user-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #F5F3F7;
+  max-width: 90px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------------------------------------------------
+   4. STREAM FILTER TABS (LIQUID PILLS)
+   --------------------------------------------------- */
+.soul-stream-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding: 0.25rem 0.15rem;
+  scrollbar-width: none;
+}
+
+.soul-stream-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.soul-filter-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: rgba(15, 21, 40, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  box-shadow: var(--lg-sheen-soft);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.soul-filter-pill:hover {
+  color: #F5F3F7;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--lg-border-subtle);
+  transform: translateY(-1px);
+}
+
+.soul-filter-pill.active {
+  background: linear-gradient(135deg, rgba(184, 50, 104, 0.28) 0%, rgba(185, 140, 255, 0.22) 100%);
+  border-color: rgba(185, 140, 255, 0.45);
+  color: #F5F3F7;
+  box-shadow: var(--lg-sheen-top), 0 4px 16px rgba(184, 50, 104, 0.25);
+}
+
+.soul-filter-count {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.10);
+  color: #F5F3F7;
+}
+
+/* ---------------------------------------------------
+   5. SOUL MOMENTS (STORIES) — VERTICAL MEMORY CARDS
+   Refined Medium Proportions & Compact Section Layout
+   --------------------------------------------------- */
+.soul-moments-section {
+  position: relative;
+  border-radius: 20px;
+  background: var(--lg-bg-primary);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid var(--lg-border-subtle);
+  box-shadow: var(--lg-sheen-top), var(--lg-shadow-card);
+  padding: 0.85rem 1.15rem;
+  overflow: hidden;
+}
+
+.soul-moments-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.soul-moments-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.soul-moments-title {
+  font-family: var(--font-main);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #F5F3F7;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.soul-moments-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* Single Liquid Glass "SEE ALL" Button */
+.soul-moments-see-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(185, 140, 255, 0.22);
+  color: #F5F3F7;
+  font-family: var(--font-main);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), 0 2px 8px rgba(0, 0, 0, 0.3);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.soul-moments-see-all-btn:hover {
+  background: linear-gradient(135deg, rgba(184, 50, 104, 0.25) 0%, rgba(185, 140, 255, 0.22) 100%);
+  border-color: rgba(185, 140, 255, 0.45);
+  color: #F5F3F7;
+  transform: translateY(-1px);
+  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.25), 0 4px 14px rgba(184, 50, 104, 0.28);
+}
+
+.soul-moments-see-all-btn:active {
+  transform: scale(0.96);
+}
+
+.soul-moments-track {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 0.35rem 0.15rem 0.55rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(185, 140, 255, 0.2) transparent;
+}
+
+.soul-moments-track::-webkit-scrollbar {
+  height: 4px;
+}
+
+.soul-moments-track::-webkit-scrollbar-thumb {
+  background: rgba(185, 140, 255, 0.22);
+  border-radius: 9999px;
+}
+
+/* Individual Vertical Memory Card — Medium Compact Balanced Scale */
+.soul-moment-card {
+  position: relative;
+  flex-shrink: 0;
+  width: 102px;
+  height: 144px;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(12, 17, 34, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 6px 18px -2px rgba(0, 0, 0, 0.45), var(--lg-sheen-soft);
+  transition: all 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.soul-moment-card:hover {
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(185, 140, 255, 0.35);
+  box-shadow: 0 12px 26px -3px rgba(0, 0, 0, 0.55), 0 0 16px rgba(185, 140, 255, 0.2);
+}
+
+.soul-moment-card.unseen {
+  border: 1.5px solid rgba(184, 50, 104, 0.65);
+  box-shadow: 0 6px 18px -2px rgba(0, 0, 0, 0.45), 0 0 12px rgba(184, 50, 104, 0.25);
+}
+
+.soul-moment-card.unseen:hover {
+  border-color: rgba(212, 66, 126, 0.85);
+  box-shadow: 0 12px 26px -3px rgba(0, 0, 0, 0.55), 0 0 18px rgba(184, 50, 104, 0.35);
+}
+
+/* Self Story / Add Moment Card */
+.soul-moment-card.is-self {
+  border: 1.5px dashed rgba(185, 140, 255, 0.55);
+  background: linear-gradient(165deg, rgba(25, 15, 38, 0.85) 0%, rgba(12, 17, 34, 0.90) 100%);
+}
+
+.soul-moment-card.is-self:hover {
+  border-style: solid;
+  border-color: rgba(185, 140, 255, 0.85);
+  box-shadow: 0 12px 26px -3px rgba(0, 0, 0, 0.55), var(--lg-shadow-glow-lavender);
+}
+
+.soul-moment-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+}
+
+.soul-moment-card:hover .soul-moment-bg-img {
+  transform: scale(1.06);
+}
+
+.soul-moment-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 14, 28, 0.42) 0%,
+    transparent 35%,
+    rgba(10, 14, 28, 0.4) 60%,
+    rgba(8, 12, 24, 0.94) 100%
+  );
+  pointer-events: none;
+}
+
+.soul-moment-top-glass-chip {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  z-index: 2;
+}
+
+.soul-moment-avatar-wrap {
+  position: relative;
+}
+
+.soul-moment-avatar {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.soul-moment-card.unseen .soul-moment-avatar {
+  border-color: #B83268;
+  box-shadow: 0 0 7px rgba(184, 50, 104, 0.65);
+}
+
+.soul-moment-add-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--primary-gradient);
+  border: 1.5px solid #080D1C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 6px rgba(184, 50, 104, 0.8);
+}
+
+.soul-moment-bottom-info {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+}
+
+.soul-moment-author-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #F5F3F7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  letter-spacing: -0.01em;
+}
+
+.soul-moment-vibe-tag {
+  font-size: 0.62rem;
+  font-weight: 500;
+  color: #79D9FF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* ---------------------------------------------------
+   6. SOUL STREAM POSTS — LIQUID GLASS MULTI-COMPOSITION
+   --------------------------------------------------- */
+.soul-stream-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* Base Post Card */
+.soul-post-card {
+  position: relative;
+  border-radius: 26px;
+  background: var(--lg-bg-primary);
+  backdrop-filter: blur(32px) saturate(190%);
+  -webkit-backdrop-filter: blur(32px) saturate(190%);
+  border: 1px solid var(--lg-border-subtle);
+  box-shadow: var(--lg-sheen-top), var(--lg-shadow-deep);
+  padding: 1.45rem 1.6rem;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.soul-post-card:hover {
+  border-color: var(--lg-border-medium);
+  box-shadow: var(--lg-sheen-top), 0 28px 70px -14px rgba(3, 7, 18, 0.75);
+}
+
+/* Post Ambient Backlight Glow */
+.soul-post-ambient-glow {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184, 50, 104, 0.08) 0%, rgba(185, 140, 255, 0.04) 50%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Post Header */
+.soul-post-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.15rem;
+}
+
+.soul-post-author-block {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  cursor: pointer;
+}
+
+.soul-post-author-avatar-wrap {
+  position: relative;
+}
+
+.soul-post-author-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), var(--lg-sheen-soft);
+  transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.soul-post-author-block:hover .soul-post-author-avatar {
+  transform: scale(1.05);
+  border-color: rgba(185, 140, 255, 0.5);
+}
+
+.soul-post-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.soul-post-author-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.soul-post-author-name {
+  font-family: var(--font-main);
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: #F5F3F7;
+  letter-spacing: -0.01em;
+}
+
+.soul-post-author-handle {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.soul-post-submeta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.soul-post-location-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #79D9FF;
+  font-weight: 500;
+}
+
+.soul-post-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.soul-post-composition-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.soul-post-menu-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.soul-post-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #F5F3F7;
+}
+
+/* ---------------------------------------------------
+   7. DISTINCT POST COMPOSITIONS
+   --------------------------------------------------- */
+
+/* COMPOSITION A: CINEMATIC MEDIA POST */
+.soul-comp-cinematic {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 1.15rem;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 14px 40px -6px rgba(0, 0, 0, 0.6);
+}
+
+.soul-comp-cinematic-img {
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.soul-post-card:hover .soul-comp-cinematic-img {
+  transform: scale(1.02);
+}
+
+.soul-comp-cinematic-overlay-pill {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(10, 14, 28, 0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #F5F3F7;
+  font-size: 0.76rem;
+  font-weight: 600;
+  box-shadow: var(--lg-sheen-soft);
+}
+
+/* COMPOSITION B: IMAGE + QUOTE EDITORIAL POST */
+.soul-comp-quote-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 1.15rem;
+  background: rgba(12, 17, 34, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.85rem;
+}
+
+@media (max-width: 680px) {
+  .soul-comp-quote-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.soul-comp-quote-media {
+  border-radius: 14px;
+  overflow: hidden;
+  height: 280px;
+}
+
+.soul-comp-quote-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.soul-comp-quote-text-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.2rem;
+  position: relative;
+}
+
+.soul-comp-quote-mark {
+  font-size: 3rem;
+  line-height: 1;
+  color: rgba(185, 140, 255, 0.25);
+  font-family: serif;
+  margin-bottom: -0.5rem;
+}
+
+.soul-comp-quote-body {
+  font-family: var(--font-main);
+  font-size: 1.08rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #F5F3F7;
+  font-style: italic;
+  margin-bottom: 0.85rem;
+}
+
+.soul-comp-quote-author {
+  font-size: 0.8rem;
+  color: #B98CFF;
+  font-weight: 600;
+}
+
+/* COMPOSITION C: MEMORY POST ("On This Day" / Soul Echo) */
+.soul-comp-memory-container {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 1.15rem;
+  border: 1px solid rgba(185, 140, 255, 0.25);
+  background: linear-gradient(160deg, rgba(28, 20, 48, 0.6) 0%, rgba(10, 14, 28, 0.8) 100%);
+  box-shadow: 0 0 24px rgba(185, 140, 255, 0.12);
+}
+
+.soul-comp-memory-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 1.1rem;
+  background: rgba(184, 50, 104, 0.18);
+  border-bottom: 1px solid rgba(185, 140, 255, 0.15);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #F5F3F7;
+}
+
+.soul-comp-memory-date {
+  color: #79D9FF;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
+.soul-comp-memory-media {
+  width: 100%;
+  max-height: 420px;
+  overflow: hidden;
+}
+
+.soul-comp-memory-media img {
+  width: 100%;
+  height: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+/* COMPOSITION D: FEELING / VIBRATIONAL FREQUENCY POST */
+.soul-comp-feeling-pill-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.85rem;
+}
+
+.soul-vibe-frequency-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(184, 50, 104, 0.25) 0%, rgba(121, 217, 255, 0.18) 100%);
+  border: 1px solid rgba(121, 217, 255, 0.35);
+  color: #F5F3F7;
+  font-size: 0.74rem;
+  font-weight: 600;
+  box-shadow: 0 0 14px rgba(121, 217, 255, 0.2);
+}
+
+.soul-vibe-wave-anim {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 12px;
+}
+
+.soul-vibe-wave-bar {
+  width: 2px;
+  height: 100%;
+  background: #79D9FF;
+  border-radius: 1px;
+  animation: vibeWaveAnim 1.2s ease-in-out infinite alternate;
+}
+
+.soul-vibe-wave-bar:nth-child(2) { animation-delay: 0.2s; height: 60%; }
+.soul-vibe-wave-bar:nth-child(3) { animation-delay: 0.4s; height: 80%; }
+.soul-vibe-wave-bar:nth-child(4) { animation-delay: 0.6s; height: 40%; }
+
+@keyframes vibeWaveAnim {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+
+/* COMPOSITION E: STANDARD IMMERSIVE POST */
+.soul-comp-standard-media {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 1.15rem;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.soul-comp-standard-media img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.soul-post-card:hover .soul-comp-standard-media img {
+  transform: scale(1.015);
+}
+
+/* ---------------------------------------------------
+   8. POST INTERACTIONS BAR (REIMAGINED LIQUID CONTROLS)
+   --------------------------------------------------- */
+.soul-post-actions-panel {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  margin-bottom: 1rem;
+  border-radius: 18px;
+  background: rgba(10, 14, 28, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--lg-sheen-soft);
+}
+
+.soul-actions-group-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.soul-action-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 9999px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-main);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.soul-action-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #F5F3F7;
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+.soul-action-pill-btn:active {
+  transform: scale(0.96);
+}
+
+.soul-action-pill-btn.liked {
+  color: #D4427E;
+  background: rgba(184, 50, 104, 0.16);
+  border-color: rgba(184, 50, 104, 0.35);
+  box-shadow: 0 0 16px rgba(184, 50, 104, 0.35);
+}
+
+.soul-action-pill-btn.saved {
+  color: #79D9FF;
+  background: rgba(121, 217, 255, 0.14);
+  border-color: rgba(121, 217, 255, 0.35);
+  box-shadow: 0 0 16px rgba(121, 217, 255, 0.3);
+}
+
+.soul-reaction-heart-pulse {
+  animation: heartPopAnim 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes heartPopAnim {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+/* Caption Block */
+.soul-post-caption-box {
+  position: relative;
+  z-index: 2;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #F5F3F7;
+  margin-bottom: 0.85rem;
+}
+
+.soul-post-caption-author {
+  font-weight: 700;
+  color: #F5F3F7;
+  margin-right: 0.45rem;
+  letter-spacing: -0.01em;
+}
+
+/* Comments Preview & Toggle */
+.soul-comments-section {
+  position: relative;
+  z-index: 2;
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.soul-comments-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 0.65rem;
+  transition: color 0.18s ease;
+}
+
+.soul-comments-toggle-btn:hover {
+  color: #B98CFF;
+}
+
+.soul-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-bottom: 0.95rem;
+}
+
+.soul-comment-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  font-size: 0.84rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.soul-comment-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.soul-comment-content {
+  flex: 1;
+}
+
+.soul-comment-user {
+  font-weight: 600;
+  color: #F5F3F7;
+  margin-right: 0.35rem;
+}
+
+.soul-comment-text {
+  color: #C8CCD8;
+}
+
+/* Inline Add Comment Input */
+.soul-comment-composer {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.5rem;
+}
+
+.soul-comment-input {
+  flex: 1;
+  height: 38px;
+  padding: 0 1rem;
+  border-radius: 14px;
+  background: rgba(10, 14, 28, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #F5F3F7;
+  font-family: var(--font-main);
+  font-size: 0.84rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.soul-comment-input:focus {
+  border-color: rgba(185, 140, 255, 0.4);
+  background: rgba(10, 14, 28, 0.9);
+}
+
+.soul-comment-submit-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  background: var(--primary-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #F5F3F7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(184, 50, 104, 0.4);
+  transition: all 0.18s ease;
+}
+
+.soul-comment-submit-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(184, 50, 104, 0.6);
+}
+
+/* ---------------------------------------------------
+   9. RIGHT COLUMN — SOUL RADAR & DISCOVERY
+   --------------------------------------------------- */
+.soul-radar-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* SOUL RADAR MODULE */
+.soul-radar-panel {
+  position: relative;
+  border-radius: 24px;
+  background: var(--lg-bg-primary);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid var(--lg-border-subtle);
+  box-shadow: var(--lg-sheen-top), var(--lg-shadow-card);
+  padding: 1.35rem 1.45rem;
+  overflow: hidden;
+}
+
+.soul-radar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.15rem;
+}
+
+.soul-radar-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.soul-radar-title {
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #F5F3F7;
+  letter-spacing: -0.01em;
+}
+
+.soul-radar-ping-icon {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #B98CFF;
+  box-shadow: 0 0 10px #B98CFF;
+  animation: radarPingAnim 2s infinite;
+}
+
+@keyframes radarPingAnim {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.4); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+.soul-radar-action-link {
+  font-size: 0.76rem;
+  color: #B98CFF;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.18s ease;
+}
+
+.soul-radar-action-link:hover {
+  color: #F5F3F7;
+}
+
+.soul-radar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.soul-radar-user-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.22s ease;
+}
+
+.soul-radar-user-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(185, 140, 255, 0.2);
+  transform: translateX(2px);
+}
+
+.soul-radar-user-info-group {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.soul-radar-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.soul-radar-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(185, 140, 255, 0.25);
+}
+
+.soul-radar-online-pip {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #79D9FF;
+  border: 1.5px solid #080D1C;
+  box-shadow: 0 0 6px #79D9FF;
+}
+
+.soul-radar-text-block {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.soul-radar-name {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #F5F3F7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.soul-radar-resonance-pill {
+  font-size: 0.7rem;
+  color: #B98CFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.soul-radar-follow-btn {
+  flex-shrink: 0;
+  padding: 0.35rem 0.8rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #F5F3F7;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.soul-radar-follow-btn:hover {
+  background: var(--primary-gradient);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 10px rgba(184, 50, 104, 0.35);
+}
+
+.soul-radar-follow-btn.following {
+  background: rgba(184, 50, 104, 0.18);
+  border-color: rgba(184, 50, 104, 0.35);
+  color: #F5F3F7;
+}
+
+/* ---------------------------------------------------
+   10. LIVE FREQUENCIES (TRENDING TOPICS & CONVERSATIONS)
+   --------------------------------------------------- */
+.soul-frequencies-panel {
+  position: relative;
+  border-radius: 24px;
+  background: var(--lg-bg-primary);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid var(--lg-border-subtle);
+  box-shadow: var(--lg-sheen-top), var(--lg-shadow-card);
+  padding: 1.35rem 1.45rem;
+}
+
+.soul-frequencies-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.15rem;
+}
+
+.soul-frequencies-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.soul-frequencies-title {
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #F5F3F7;
+}
+
+.soul-frequencies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.soul-frequency-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.soul-frequency-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(185, 140, 255, 0.25);
+  transform: translateX(2px);
+}
+
+.soul-frequency-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.soul-frequency-tag {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #B98CFF;
+}
+
+.soul-frequency-item:hover .soul-frequency-tag {
+  color: #F5F3F7;
+}
+
+.soul-frequency-vibe {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.soul-frequency-count-badge {
+  font-size: 0.72rem;
+  color: #79D9FF;
+  background: rgba(121, 217, 255, 0.10);
+  border: 1px solid rgba(121, 217, 255, 0.18);
+  border-radius: 9999px;
+  padding: 0.18rem 0.55rem;
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------
+   11. DISCOVER MODULE (PLACES, MOODS, COMMUNITIES)
+   --------------------------------------------------- */
+.soul-discover-panel {
+  position: relative;
+  border-radius: 24px;
+  background: var(--lg-bg-primary);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid var(--lg-border-subtle);
+  box-shadow: var(--lg-sheen-top), var(--lg-shadow-card);
+  padding: 1.35rem 1.45rem;
+}
+
+.soul-discover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.soul-discover-title {
+  font-family: var(--font-main);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #F5F3F7;
+}
+
+.soul-discover-tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.soul-discover-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.soul-discover-chip:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #F5F3F7;
+  border-color: rgba(185, 140, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+/* ---------------------------------------------------
+   12. SOUL SYNCHRONICITY MOTTO CARD
+   --------------------------------------------------- */
+.soul-sync-card {
+  position: relative;
+  border-radius: 20px;
+  padding: 1.35rem;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(184, 50, 104, 0.18) 0%, rgba(185, 140, 255, 0.14) 50%, rgba(10, 14, 28, 0.8) 100%);
+  border: 1px solid rgba(185, 140, 255, 0.28);
+  box-shadow: 0 0 30px rgba(184, 50, 104, 0.18), var(--lg-sheen-top);
+  overflow: hidden;
+}
+
+.soul-sync-card-motto {
+  font-family: var(--font-main);
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-style: italic;
+  color: #F5F3F7;
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.01em;
+}
+
+.soul-sync-card-stat {
+  font-size: 0.72rem;
+  color: #79D9FF;
+  font-weight: 500;
+}
+
+/* ---------------------------------------------------
+   13. INTERACTIVE STORY VIEWER MODAL
+   --------------------------------------------------- */
+.soul-story-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(4, 7, 18, 0.88);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: storyModalFadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes storyModalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.soul-story-modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 440px;
+  height: 82vh;
+  max-height: 760px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #000000;
+  border: 1.5px solid rgba(185, 140, 255, 0.35);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(184, 50, 104, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.soul-story-progress-bar-wrap {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 10;
+  display: flex;
+  gap: 4px;
+}
+
+.soul-story-progress-segment {
+  flex: 1;
+  height: 3px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+
+.soul-story-progress-fill {
+  height: 100%;
+  background: #F5F3F7;
+  border-radius: 9999px;
+  width: 100%;
+}
+
+.soul-story-modal-header {
+  position: absolute;
+  top: 1.6rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.soul-story-modal-user {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.soul-story-modal-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid #F5F3F7;
+}
+
+.soul-story-modal-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #F5F3F7;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.soul-story-modal-time {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.soul-story-close-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(10, 14, 28, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #F5F3F7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.soul-story-close-btn:hover {
+  background: rgba(10, 14, 28, 0.9);
+  transform: scale(1.08);
+}
+
+.soul-story-modal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.soul-story-modal-footer {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.soul-story-reply-input {
+  flex: 1;
+  height: 42px;
+  border-radius: 9999px;
+  background: rgba(10, 14, 28, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0 1.2rem;
+  color: #F5F3F7;
+  font-family: var(--font-main);
+  font-size: 0.86rem;
+  outline: none;
+}
+
+.soul-story-react-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(10, 14, 28, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #D4427E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.18s ease;
+}
+
+.soul-story-react-btn:hover {
+  transform: scale(1.1);
+}
